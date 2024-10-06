@@ -1,3 +1,4 @@
+import os
 from flask import Flask, request, Response, jsonify
 from langchain_openai import OpenAIEmbeddings, ChatOpenAI
 from langchain.chains import RetrievalQA
@@ -11,7 +12,7 @@ load_dotenv()
 app = Flask(__name__)
 
 def load_database(persist_directory):
-    embedding = OpenAIEmbeddings()
+    embedding = OpenAIEmbeddings(openai_api_type=os.environ.get('OPENAI_API_KEY'))
     vectordb = Chroma(persist_directory=persist_directory, embedding_function=embedding)
     return vectordb
 

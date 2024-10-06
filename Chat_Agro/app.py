@@ -1,4 +1,3 @@
-import os
 from flask import Flask, request, Response, jsonify
 from langchain_openai import OpenAIEmbeddings, ChatOpenAI
 from langchain.chains import RetrievalQA
@@ -12,14 +11,14 @@ load_dotenv()
 app = Flask(__name__)
 
 def load_database(persist_directory):
-    embedding = OpenAIEmbeddings(openai_api_type=os.environ.get('OPENAI_API_KEY'))
+    embedding = OpenAIEmbeddings()
     vectordb = Chroma(persist_directory=persist_directory, embedding_function=embedding)
     return vectordb
 
 persist_directory = "./data/chroma"
 vectordb = load_database(persist_directory)
 retriever = vectordb.as_retriever(search_kwargs={"k": 6})
-llm = ChatOpenAI(api_key=os.environ.get('OPENAI_API_KEY'), model_name="gpt-4o-mini", temperature=0.6)
+llm = ChatOpenAI(model_name="gpt-4o-mini", temperature=0.6)
 history = ConversationSummaryMemory(llm = llm)
 r = RetrievalQA.from_chain_type(llm=llm, retriever=retriever, memory = history)
 
@@ -40,4 +39,4 @@ def response_chat():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, debug=False)
+    app.run(host='0.0.0.0', port=5000, debug=True)

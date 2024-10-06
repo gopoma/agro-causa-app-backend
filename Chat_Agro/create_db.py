@@ -22,7 +22,7 @@ def create_database(pdf_path, persist_directory):
     docs = c_splitter.split_documents(pages)
 
     # Crear los embeddings
-    embedding = OpenAIEmbeddings(api_key=os.environ.get('OPENAI_API_KEY'))
+    embedding = OpenAIEmbeddings()
 
     # Crear la base de datos en Chroma y persistirla
     vectordb = Chroma.from_documents(documents=docs, embedding=embedding, persist_directory=persist_directory)

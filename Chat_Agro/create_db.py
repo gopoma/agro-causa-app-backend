@@ -9,6 +9,10 @@ from dotenv import load_dotenv
 load_dotenv()
 
 def create_database(pdf_path, persist_directory):
+    # Verificar si el archivo PDF existe
+    if not os.path.isfile(pdf_path):
+        raise FileNotFoundError(f"El archivo {pdf_path} no existe.")
+
     # Cargar y procesar el documento PDF
     loader = PyPDFLoader(pdf_path)
     pages = loader.load()
@@ -25,6 +29,6 @@ def create_database(pdf_path, persist_directory):
     print(f"Base de datos creada y guardada en: {persist_directory}")
 
 if __name__ == "__main__":
-    pdf_path = "../../Documents/hackathon/Chat_Agro/Chat_Agro/data/entrenamiento/entrenamiento.pdf"
+    pdf_path = os.path.join(os.path.dirname(__file__), "data", "entrenamiento", "entrenamiento.pdf")
     persist_directory = "./data/chroma"
     create_database(pdf_path, persist_directory)

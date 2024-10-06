@@ -4,7 +4,7 @@ FROM python:3.9-slim
 # Establecer el directorio de trabajo dentro del contenedor
 WORKDIR /app
 
-RUN echo $OPENAI_API_KEY
+ENV OPENAI_API_KEY=XRNjA8cKXifWs53Ud1DX
 
 # Copiar el archivo de dependencias
 COPY requirements.txt requirements.txt

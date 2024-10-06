@@ -19,7 +19,7 @@ def load_database(persist_directory):
 persist_directory = "./data/chroma"
 vectordb = load_database(persist_directory)
 retriever = vectordb.as_retriever(search_kwargs={"k": 6})
-llm = ChatOpenAI(model_name="gpt-4o-mini", temperature=0.6)
+llm = ChatOpenAI(api_key=os.environ.get('OPENAI_API_KEY'), model_name="gpt-4o-mini", temperature=0.6)
 history = ConversationSummaryMemory(llm = llm)
 r = RetrievalQA.from_chain_type(llm=llm, retriever=retriever, memory = history)
 

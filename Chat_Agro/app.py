@@ -17,9 +17,21 @@ retriever = vectordb.as_retriever(search_kwargs={"k": 6})
 llm = ChatOpenAI(model_name="gpt-4o-mini", temperature=0.6)
 history = ConversationSummaryMemory(llm = llm)
 r = RetrievalQA.from_chain_type(llm=llm, retriever=retriever, memory = history)
-@app.route('/')
-def hello_world():  # put application's code here
-    return 'Hello World!'
+
+@app.route('/chat/response', methods=['POST'])
+def response_chat():
+    data = request.get_json()
+    question = data['question']
+    conditions = data['conditions']
+    conditions_str = ", ".join(f"{key}: {value}" for key, value in conditions.items())
+
+    question_complete = "Considera esto" + conditions_str + "responde de menera entendible y explicativa y no muy tecnicamente" + question
+    result = r.invoke({"query" : question_complete + "Dame una respuesta como si fueras un experto en agricultura" })
+    return jsonify({
+        "conditions": conditions,
+        "question": question,
+        "response": result
+    })
 
 
 if __name__ == '__main__':

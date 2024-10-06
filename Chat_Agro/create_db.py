@@ -8,8 +8,6 @@ from dotenv import load_dotenv
 # Cargar variables de entorno
 load_dotenv()
 
-print("xd", os.environ.get("OPENAI_API_KEY"))
-
 def create_database(pdf_path, persist_directory):
     # Verificar si el archivo PDF existe
     if not os.path.isfile(pdf_path):

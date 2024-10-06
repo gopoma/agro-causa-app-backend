@@ -4,8 +4,6 @@ FROM python:3.9-slim
 # Establecer el directorio de trabajo dentro del contenedor
 WORKDIR /app
 
-ENV OPENAI_API_KEY=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
-
 # Copiar el archivo de dependencias
 COPY requirements.txt requirements.txt
 

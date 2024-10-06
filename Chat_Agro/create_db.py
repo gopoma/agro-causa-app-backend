@@ -3,10 +3,10 @@ from langchain_community.document_loaders import PyPDFLoader
 from langchain.text_splitter import CharacterTextSplitter
 from langchain_openai import OpenAIEmbeddings
 from langchain_community.vectorstores import Chroma
-# from dotenv import load_dotenv
+from dotenv import load_dotenv
 
 # Cargar variables de entorno
-# load_dotenv()
+load_dotenv()
 
 print("xd", os.environ.get("OPENAI_API_KEY"))
 
